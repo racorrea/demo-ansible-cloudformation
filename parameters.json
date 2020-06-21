@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "SubnetID",
+        "ParameterValue": "subnet-307bd546"
+    },
+    {
+        "ParameterKey": "SecurityGroupIDs",
+        "ParameterValue": "sg-0c34768626e23cebd"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "jenkins-server"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.micro"
+    }
+]
