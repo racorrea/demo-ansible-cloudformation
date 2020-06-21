@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "SubnetID",
+        "ParameterValue": "subnet-ID"
+    },
+    {
+        "ParameterKey": "SecurityGroupIDs",
+        "ParameterValue": "sg-ID"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "Nombre de la Key"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.xxxxxxx"
+    }
+]
