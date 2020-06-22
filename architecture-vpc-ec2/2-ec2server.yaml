@@ -27,54 +27,67 @@ Mappings:
 Resources:
   myFirewallDemo:
     Type: AWS::EC2::SecurityGroup
-    Properties: 
+    Properties:
       GroupDescription: Permite conexion ssh desde internet
-      SecurityGroupIngress: 
+      SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-      Tags: 
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
         - Key: Name
           Value: sshDemo
       VpcId: !Ref VpcID
   EC2InstancePublicServer:
-    Type: AWS::EC2::Instance 
+    Type: AWS::EC2::Instance
     Properties:
-      ImageId:
-        !FindInMap 
-          - AWSRegionToAMI 
-          - !Ref AWS::Region
-          - AMIID
+      ImageId: !FindInMap
+        - AWSRegionToAMI
+        - !Ref AWS::Region
+        - AMIID
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
       SecurityGroupIds:
         - !Ref myFirewallDemo
       SubnetId: !Ref SubnetPublicID
-      Tags: 
-        -
-          Key: Name
-          Value: Demo Public Server 
-        -
-          Key: Environment
+      UserData:
+        Fn::Base64: 
+          !Sub |
+            #!/bin/bash
+            yum update -y
+            amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+            yum install -y httpd mariadb-server
+            systemctl start httpd
+            systemctl enable httpd
+            usermod -a -G apache ec2-user
+            chown -R ec2-user:apache /var/www
+            chmod 2775 /var/www
+            find /var/www -type d -exec chmod 2775 {} \;
+            find /var/www -type f -exec chmod 0664 {} \;
+            echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+      Tags:
+        - Key: Name
+          Value: Demo Public Server
+        - Key: Environment
           Value: Development
   EC2InstancePrivateServer:
-    Type: AWS::EC2::Instance 
+    Type: AWS::EC2::Instance
     Properties:
-      ImageId:
-        !FindInMap 
-          - AWSRegionToAMI 
-          - !Ref AWS::Region
-          - AMIID
+      ImageId: !FindInMap
+        - AWSRegionToAMI
+        - !Ref AWS::Region
+        - AMIID
       InstanceType: !Ref InstanceType
       KeyName: !Ref KeyName
       SecurityGroupIds:
         - !Ref myFirewallDemo
       SubnetId: !Ref SubnetPrivateID
-      Tags: 
-        -
-          Key: Name
-          Value: Demo Private Server 
-        -
-          Key: Environment
+      Tags:
+        - Key: Name
+          Value: Demo Private Server
+        - Key: Environment
           Value: Development
