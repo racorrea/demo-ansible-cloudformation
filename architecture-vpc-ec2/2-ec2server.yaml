@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  VpcID:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC to deploy EC2 instance into
+  SubnetPublicID:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet to deploy EC2 instance into
+  SubnetPrivateID:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet to deploy EC2 instance into
+  SecurityGroupIDs:
+    Type: List<AWS::EC2::SecurityGroup::Id>
+    Description: List of Security Groups to add to EC2 instance
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: >-
+      Name of an existing EC2 KeyPair to enable SSH access to the instance
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+Mappings:
+  AWSRegionToAMI:
+    us-east-1:
+      AMIID: ami-0a887e401f7654935
+Resources:
+  myFirewallDemo:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: Permite conexion ssh desde internet
+      SecurityGroupIngress: 
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags: 
+        - Key: Name
+          Value: sshDemo
+      VpcId: !Ref VpcID
+  EC2InstancePublicServer:
+    Type: AWS::EC2::Instance 
+    Properties:
+      ImageId:
+        !FindInMap 
+          - AWSRegionToAMI 
+          - !Ref AWS::Region
+          - AMIID
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroupIds:
+        - !Ref myFirewallDemo
+      SubnetId: !Ref SubnetPublicID
+      Tags: 
+        -
+          Key: Name
+          Value: Demo Public Server 
+        -
+          Key: Environment
+          Value: Development
+  EC2InstancePrivateServer:
+    Type: AWS::EC2::Instance 
+    Properties:
+      ImageId:
+        !FindInMap 
+          - AWSRegionToAMI 
+          - !Ref AWS::Region
+          - AMIID
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroupIds:
+        - !Ref myFirewallDemo
+      SubnetId: !Ref SubnetPrivateID
+      Tags: 
+        -
+          Key: Name
+          Value: Demo Private Server 
+        -
+          Key: Environment
+          Value: Development

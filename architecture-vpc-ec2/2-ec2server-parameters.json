@@ -1,0 +1,26 @@
+[
+    {
+        "ParameterKey": "VpcID",
+        "ParameterValue": "vpc-0fc1d7b96d6938e6f"
+    },
+    {
+        "ParameterKey": "SubnetPublicID",
+        "ParameterValue": "subnet-014a1fa1da6221559"
+    },
+    {
+        "ParameterKey": "SubnetPrivateID",
+        "ParameterValue": "subnet-074c491b0fed9aa57"
+    },
+    {
+        "ParameterKey": "SecurityGroupIDs",
+        "ParameterValue": "sg-0c34768626e23cebd"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "jenkins-server"
+    },
+    {
+        "ParameterKey": "InstanceType",
+        "ParameterValue": "t2.micro"
+    }
+]

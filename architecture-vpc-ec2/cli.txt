@@ -1,0 +1,5 @@
+# VPC
+aws cloudformation create-stack --stack-name demovpc --template-body file://1-vpc.yaml
+
+# EC2 Servers
+aws cloudformation create-stack --stack-name demoec2 --template-body file://2-ec2server.yaml --parameters file://2-ec2server-parameters.json
