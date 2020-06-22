@@ -2,22 +2,22 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   VpcID:
     Type: AWS::EC2::VPC::Id
-    Description: VPC to deploy EC2 instance into
+    Description: VPC dónde se alojará la instancia
   SubnetPublicID:
     Type: AWS::EC2::Subnet::Id
-    Description: Subnet to deploy EC2 instance into
+    Description: Subnet dónde se alojará la instancia
   SubnetPrivateID:
     Type: AWS::EC2::Subnet::Id
-    Description: Subnet to deploy EC2 instance into
+    Description: Subnet dónde se alojará la instancia
   SecurityGroupIDs:
     Type: List<AWS::EC2::SecurityGroup::Id>
-    Description: List of Security Groups to add to EC2 instance
+    Description: Lista de Security Groups para agregar a EC2 instance
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
     Description: >-
-      Name of an existing EC2 KeyPair to enable SSH access to the instance
+      KeyPair para acceder por SSH a la instancia
   InstanceType:
-    Description: EC2 instance type
+    Description: Tipo de instancia EC2
     Type: String
     Default: t2.micro
 Mappings:
@@ -28,7 +28,7 @@ Resources:
   myFirewallDemo:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Permite conexion ssh desde internet
+      GroupDescription: Permite conexion ssh y 80 desde internet
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
