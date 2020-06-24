@@ -1,19 +1,19 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   EnvironmentName:
-    Description: An environment name that is prefixed to resource names
+    Description: Crea el nombre del entorno
     Type: String
     Default: VPCDemo
   VpcCIDR:
-    Description: Please enter the IP range (CIDR notation) for this VPC
+    Description: Establece el rango de IPs para la VPC
     Type: String
     Default: 10.0.0.0/16
   PublicSubnet1CIDR:
-    Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
+    Description: Establece el rango de IPs para la Subnet Publica
     Type: String
     Default: 10.0.0.0/24
   PrivateSubnet1CIDR:
-    Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
+    Description: Establece el rango de IPs para la Subnet Privada
     Type: String
     Default: 10.0.1.0/24
 Resources:

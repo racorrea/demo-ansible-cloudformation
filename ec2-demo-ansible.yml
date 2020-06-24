@@ -1,0 +1,25 @@
+- name: demo ec2 launcher
+  hosts: localhost
+  gather_facts: False
+
+  tasks:
+
+    - name: Demo para proveer instancias
+      ec2:
+         key_name: jenkins-server
+         group: test
+         instance_type: t2.micro
+         image: ami-085925f297f89fce1
+         region: us-east-1
+         group: default
+         count: 1
+         vpc_subnet_id: subnet-307bd546
+         wait: true
+         assign_public_ip: yes
+         count_tag:
+            Name: Demo-from-ansible
+         instance_tags:
+            Name: Demo-from-ansible
+      register: ec2
+
+yaml -yml
