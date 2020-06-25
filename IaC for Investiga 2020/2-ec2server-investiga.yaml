@@ -3,19 +3,20 @@ Parameters:
   VpcID:
     Type: AWS::EC2::VPC::Id
     Description: VPC dónde se alojará la instancia
+    Default: vpc-03e3d301e77c2bd57
   SubnetPublicID:
     Type: AWS::EC2::Subnet::Id
-    Description: Subnet dónde se alojará la instancia
+    Description: Subnet dónde se alojará la instancia dónde se desplegará el artefacto JAVA
+    Default: subnet-06b3ea4385355f9c5
   SubnetPrivateID:
     Type: AWS::EC2::Subnet::Id
     Description: Subnet dónde se alojará la instancia
-  SecurityGroupIDs:
-    Type: List<AWS::EC2::SecurityGroup::Id>
-    Description: Lista de Security Groups para agregar a EC2 instance
+    Default: subnet-0cdcf85b6d1aa9015
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
     Description: >-
       KeyPair para acceder por SSH a la instancia
+    Default: investiga-servers
   InstanceType:
     Description: Tipo de instancia EC2
     Type: String
