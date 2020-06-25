@@ -17,7 +17,7 @@ Parameters:
 Mappings:
   AWSRegionToAMI:
     us-east-1:
-      AMIID: ami-0a887e401f7654935
+      AMIID: ami-09d95fab7fff3776c
 Resources:
   EC2Instance:
     Type: AWS::EC2::Instance 
@@ -35,8 +35,7 @@ Resources:
         Fn::Base64: 
           !Sub |
               #!/bin/bash
-              sudo su 
-              amazon-linux-extras install epel
+              yum update -y
               amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
               yum install -y httpd mariadb-server
               systemctl start httpd
@@ -47,12 +46,6 @@ Resources:
               find /var/www -type d -exec chmod 2775 {} \;
               find /var/www -type f -exec chmod 0664 {} \;
               echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
-              yum update -y
-              wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-              yum install epel-release-latest-7.noarch.rpm
-              yum update -y
-              yum install -y git python python-devel python-pip openssl ansible 
-              ansible --version
       Tags: 
         -
           Key: Name
@@ -60,3 +53,5 @@ Resources:
         -
           Key: Environment
           Value: Development
+
+
