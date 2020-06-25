@@ -57,17 +57,21 @@ Resources:
       SubnetId: !Ref SubnetPublicID
       UserData:
         Fn::Base64: 
-          !Sub |
+          !Sub | #Instalar Maven -> https://linuxize.com/post/how-to-install-apache-maven-on-centos-7/
               #!/bin/bash
               echo " ****************************** Hola iniciamos ********************************"
               yum update -y
-              sudo wget https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-              sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-              sudo yum install -y apache-maven
-              sudo yum install java-1.8.0-devel
+              yum install java-1.8.0 -y
+              yum remove java-1.7.0-openjdk -y
               sudo yum install git -y
               java -version
               echo " ****************************** Terminamos ********************************"
+              echo " ****************************** Descargamos el código y compilamos ********************************"
+              git clone https://github.com/racorrea/demo-api-jenkins.git
+              cd /demo-api-jenkins
+              mvn clean package
+              cd target/
+              echo " ****************************** Terminamos 2 ********************************"
       Tags:
         - Key: Name
           Value: Demo Public Server
